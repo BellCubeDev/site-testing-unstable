@@ -1,0 +1,58 @@
+---
+layout: page
+title: Tools - Nexus Stats Scraper
+extra_head: >
+    <script async type="module" src="nexus-stats-scraper.js"></script>
+# day-month-year
+lastMod: 15-10-2022
+description: >
+    A tool to extract in-depth statistics from individual Nexus Mods mod pages.
+
+    Nexus Mods stores statistics for all mods publicly, down to the day. However, there is no easy way to get the raw data for these statistics&mdash;at least, not without this tool. This tool will extract the raw data from the Nexus Stats page and output it in multiple formats, such as JSON and CSV. Additionally, it will also (eventually) display the File Update Tree, which visually shows the history of file updates for a mod as your mod manager sees it.
+permalink: /tools/nexus-stats-scraper/
+---
+
+
+<h1>Nexus Stats Scraper</h1>
+<p>Nexus Mods stores statistics for all mods publicly, down to the day. However, there is no easy way to get the raw data for these statistics&mdash;at least, not without this tool. This tool will extract the raw data from the Nexus Stats page and output it in multiple formats, such as JSON and CSV. Additionally, it will also (eventually) display the File Update Tree, which visually shows the history of file updates for a mod as your mod manager sees it.</p>
+
+<div id="statsScraper_apiKey_cont" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" tabindex="-1">
+    <input id="statsScraper_apiKey" class="mdl-textfield__input" type="text" placeholder="">
+    <label class="mdl-textfield__label" for="statsScraper_apiKey">Personal API Key</label>
+</div>
+<div class="js-bcd-tooltip" tooltip-relation="proceeding" tooltip-position="bottom"><p>
+    Your personal Nexus Mods API key&mdash;you can get yours from <a href="https://www.nexusmods.com/users/myaccount?tab=api#personal_key" target="_blank">Nexus' site settings</a>.
+</p></div>
+
+<div id="statsScraper_modID_cont" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" tabindex="-1">
+    <input id="statsScraper_modID" class="mdl-textfield__input" type="text" placeholder="Vanilla">
+    <label class="mdl-textfield__label" for="statsScraper_modID">Mod ID</label>
+</div>
+<div class="js-bcd-tooltip" tooltip-relation="proceeding" tooltip-position="bottom"><p>
+    The mod you wish to extract stats from
+</p></div>
+
+<div id="statsScraper_gameID_cont" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" tabindex="-1">
+    <input id="statsScraper_gameID" class="mdl-textfield__input" type="text" placeholder="Vanilla">
+    <label class="mdl-textfield__label" for="statsScraper_gameID">Game ID (numeric)</label>
+</div>
+<div class="js-bcd-tooltip" tooltip-relation="proceeding" tooltip-position="bottom"><p>
+    The game this mod is from
+</p></div>
+
+<div id="statsScraper_extractURL_cont" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" tabindex="-1">
+    <input id="statsScraper_extractURL" class="mdl-textfield__input" type="text" placeholder="https://www.nexusmods.com/skyrimspecialedition/mods/47087" pattern="^.*?\bnexusmods\.com\/(\w+)\/mods\/(?:.*?\/)*?(\d+)\/?(\?.*|#.*|[^\w]*)$">
+    <label class="mdl-textfield__label" for="statsScraper_extractURL">URL to extract from</label>
+</div>
+<div class="js-bcd-tooltip" tooltip-relation="proceeding" tooltip-position="bottom"><p>
+    Put a mod URL in here and click the nifty button to the right to extract the mod ID and game ID from it!
+</p></div>
+
+<div id="prefab-output" class="hidden" aria-hidden="true">
+    <h3>Example/File.ts</h3>
+
+    <pre><button onclick="window.copyCode(this);requestAnimationFrame(this.blur.bind(this));" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" style='width:32px;min-width:32px;height:32px;'><i class="material-icons" style="font-size:75%;font-variation-settings:'FILL' 0,">content_copy</i></button><code class="language-typescript"><span class="hljs-section">ERROR: This text should not EVER show!</code></pre>
+</div>
+
+<h2>Output</h2>
+<div id="output-area" style="font-size:12px;transition-duration:100ms;"></div>
