@@ -6,8 +6,8 @@
 first_publication_year: 2022
 
 # URL Root (used in URIs) - THESE SHOULD NOT END IN "/"
-repourl: https://github.com/BellCubeDev/site-testing
-mainurl: https://testing.bellcube.dev
+repourl: https://github.com/BellCubeDev/site-testing-unstable
+mainurl: https://unstable.testing.bellcube.dev
 
 # ============================
 # SEO
