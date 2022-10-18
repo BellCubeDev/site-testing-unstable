@@ -2,8 +2,8 @@
 name: Build & Deploy Site
 on: # Run when the `main` branch is pushed to or when manually requested
   push:
-    branches: [ "main" ]
     paths:
+    branches: [ "unstable-main" ]
       - '.github/workflows/github-pages-build-and-deploy.yml'
       - 'site/**'
   workflow_dispatch:
