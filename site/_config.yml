@@ -6,9 +6,9 @@
 first_publication_year: 2022
 
 # URL Root (used in URIs) - THESE SHOULD NOT END IN "/"
-baseurl: /site-testing
-repourl: https://github.com/BellCubeDev/site-testing
-fullurl: https://bellcubedev.github.io/site-testing
+baseurl: /site-testing-unstable
+repourl: https://github.com/BellCubeDev/site-testing-unstable
+fullurl: https://bellcubedev.github.io/site-testing-unstable
 mainurl: https://bellcubedev.github.io
 
 # ============================
