@@ -1,6 +1,7 @@
 import type * as rawInfo from './nexusModsInfo';
 import { getInputValue } from '../../universal.js';
 
+const api_baseUrl = `https://api.nexusmods.com/v1/games`;
 
 declare global {interface Window {
     statsScraper: {
@@ -39,12 +40,19 @@ function getApiRequestInit(apiKey?: string|null, method: string = 'get') : Reque
     if (!apiKey) apiKey = getApiKey();
     if (!apiKey) throw new Error('No API key provided!');
 
-    const headers = new Headers();
-    headers.append('apikey', apiKey);
-    headers.append('accept', 'application/json');
-    headers.append('user-agent', 'BellCubeDev/NexusMods-Mod-Stats-Scraper');
 
-    const requestInit:RequestInit = {headers, mode:'no-cors', cache:'no-cache', method, referrerPolicy: 'unsafe-url', credentials: 'omit'};
+    const requestInit:RequestInit = {
+        cache:'no-cache',
+        method,
+        referrerPolicy: 'unsafe-url',
+        credentials: 'omit',
+        headers: {
+            apiKey,
+            accept: 'application/json',
+            'user-agent': 'BellCubeDev/NexusMods-Mod-Stats-Scraper',
+            origin: window.location.origin
+        }
+    };
 
     console.log('Returning request init:', requestInit);
 
@@ -64,7 +72,7 @@ async function setIDsFromURL(url?: string) {
     const modID = parseInt(urlMatch[2] ?? '');
 
     const gameDomain = urlMatch[1] ?? '';
-    const gameID = await fetch(`https://api.nexusmods.com/v1/games/${gameDomain}.json`, getApiRequestInit())
+    const gameID = await fetch(`${api_baseUrl}/${gameDomain}.json`, getApiRequestInit())
         .then(r => r.json() as Promise<{game_id: number}>)
         .then(r => r.game_id);
 
@@ -112,11 +120,11 @@ async function fetchStats():Promise<statsItems> {
     const modID = parseInt(getInputValue(document.getElementById('statsScraper_modID') as HTMLInputElement));
     const gameID = parseInt(getInputValue(document.getElementById('statsScraper_gameID') as HTMLInputElement));
 
-    const topLevel = await fetch(`https://api.nexusmods.com/v1/games/${gameID}/mods/${modID}.json`, getApiRequestInit())
+    const topLevel = await fetch(`${api_baseUrl}/${gameID}/mods/${modID}.json`, getApiRequestInit())
                                 .then(r => r.json()) as rawInfo.IMod;
 
     // Get Endorsements, Downloads, Page Views, and Uploads data all in one go thanks to the power of Promise.all
-    const endorsements_ = fetch(`hhttps://nexus-stats.fra1.cdn.digitaloceanspaces.com/mods/${topLevel.uid}/daily-endorsements.json`, getApiRequestInit())
+    const endorsements_ = fetch(`https://nexus-stats.fra1.cdn.digitaloceanspaces.com/mods/${topLevel.uid}/daily-endorsements.json`, getApiRequestInit())
                             .then(r => r.json() as Promise<rawInfo.IEndorsements>);
     const dlAndViews_   = fetch(`https://staticstats.nexusmods.com/mod_monthly_stats/${topLevel.game_id}/${modID}.json`, getApiRequestInit())
                             .then(r => r.json()  as Promise<rawInfo.IDLsAndViews>);
@@ -260,7 +268,7 @@ async function createFileTrees(topLevel: rawInfo.IMod, files: rawInfo.IFile[]) {
     const hiddenFiles: rawInfo.IFile[] = [];
 
     // Get the files available to the API directly:
-    const canonicalFiles = await (await fetch(`https://api.nexusmods.com/v1/games/${topLevel.domain_name}/mods/${topLevel.mod_id}/files.json`, getApiRequestInit())).json() as rawInfo.IFileList;
+    const canonicalFiles = await (await fetch(`${api_baseUrl}/${topLevel.domain_name}/mods/${topLevel.mod_id}/files.json`, getApiRequestInit())).json() as rawInfo.IFileList;
     canonicalFiles.files.forEach(file => filesById[file.id[0]] = file);
 
     console.debug('Fetched files from API:', canonicalFiles);
@@ -271,7 +279,7 @@ async function createFileTrees(topLevel: rawInfo.IMod, files: rawInfo.IFile[]) {
 
         console.debug(`Fetching file ${fileID} separately...`);
 
-        fetch(`https://api.nexusmods.com/v1/games/${topLevel.domain_name}/mods/${topLevel.mod_id}/files/${fileID}.json`, getApiRequestInit())
+        fetch(`${api_baseUrl}/${topLevel.domain_name}/mods/${topLevel.mod_id}/files/${fileID}.json`, getApiRequestInit())
             .then(async (fileData) => {
 
             hiddenFiles.push(await fileData.json());
