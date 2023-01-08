@@ -1,0 +1,1 @@
+{"version":3,"file":"nexus-stats-scraper.d.ts","sourceRoot":"https://raw.githubusercontent.com/BellCubeDev/site-testing/deployment/","sources":["tools/nexus-stats-scraper/nexus-stats-scraper.ts"],"names":[],"mappings":"AAKA,OAAO,CAAC,MAAM,CAAC;IAAC,UAAU,MAAM;QAC5B,YAAY,EAAE;YACV,WAAW,EAAE,MAAM,IAAI,CAAC;YACxB,aAAa,EAAE,MAAM,IAAI,CAAC;SAC7B,CAAA;KACJ;CAAC"}

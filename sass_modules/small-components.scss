@@ -1,0 +1,22 @@
+// Dynamic Width/Height Text Areas
+.js-dynamic-textarea-width,
+.js-dynamic-textarea-height {
+    resize: none;
+    overflow: visible;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+// Settings Grid
+.js-settings-grid {
+    display: grid;
+
+    gap: 16px;
+    margin-top: 32px;
+    padding-left: 16px;
+
+    justify-items: start;
+    align-content: center;
+
+    grid-template-columns: minmax(425px, max-content);
+}

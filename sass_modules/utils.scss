@@ -1,0 +1,81 @@
+
+
+.mdl-button--raised.mdl-button--colored:is(:active, :not(:active), :focus) {
+    &.bcd-button-open {
+        background-color: #0084ff;
+    }
+
+    &.bcd-button-openDir {
+        background-color: #00a2b8;
+    }
+
+    &.bcd-button-openFile {
+        background-color: #3c60ff;
+    }
+
+    &.bcd-button-save {
+        background-color: #009950;
+    }
+}
+
+%message-block {
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    color: #ddd;
+
+    :first-child {
+        color: #fff;
+        margin-top: 0;
+    }
+
+    :last-child {
+        margin-bottom: 0;
+    }
+}
+
+.danger-block {
+    @extend %message-block;
+    background-color: #f003;
+}
+
+.warning-block {
+    @extend %message-block;
+    background-color: #ff04;
+}
+
+.notice-block {
+    @extend %message-block;
+    background-color: #0cf3;
+}
+
+.w128 {
+    width: 128px;
+}
+
+.w144 {
+    width: 144px;
+}
+
+.w192 {
+    width: 192px;
+}
+
+.mr8 {
+    margin-right: 8px;
+}
+
+.needs-shadow {
+    text-shadow: 2px 2px 10px #000000a0;
+}
+
+.center-vert {
+    display: flex !important;
+    justify-content: flex-start;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    text-align: center;
+}
