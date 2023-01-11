@@ -92,7 +92,8 @@ const doInlineSources = process.env.doInlineSources?.trim().replace(/^"(.*)"$/, 
 
 const absoluteMinifyDir = path.resolve(minifyDir);
 const minifyDirURI = new URL(`file://${absoluteMinifyDir}/`);
-const canonicalMinifyURI = doInlineSources ? minifyDirURI.href : `https://raw.githubusercontent.com/${process.env.repository || 'BellCubeDev/site-testing'}/deployment/`;
+const repo = process.env.repository?.trim().replace(/^"(.*)"$/, '$1')|| 'BellCubeDev/site-testing';
+const canonicalMinifyURI = doInlineSources ? minifyDirURI.href : `https://raw.githubusercontent.com/${repo}/deployment/`;
 
 setTimeout(evalFilesInDir.bind(undefined, minifyDir), 100);
 
