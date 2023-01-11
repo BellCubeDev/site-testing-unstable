@@ -268,8 +268,8 @@ async function minifyJSFile(filePath) {
                 filename: `${path.basename(filePath, '.js')}.ts`,
                 content: "inline",
                 includeSources: doInlineSources,
-                root:  doInlineSources ? '' : 'https://raw.githubusercontent.com/BellCubeDev/site-testing/deployment/',
-                url: doInlineSources ? 'inline' : `https://raw.githubusercontent.com/BellCubeDev/site-testing/deployment/${urlFilePath}.map`
+                root:  doInlineSources ? '' : `https://raw.githubusercontent.com/${repo}/deployment/`,
+                url: doInlineSources ? 'inline' : `https://raw.githubusercontent.com/${repo}/deployment/${urlFilePath}.map`
             },
             module: !pathConfig.notModule.some(str => filePath.includes(str)),
             toplevel: true,
