@@ -144,7 +144,7 @@ const fontStylesheets = await Promise.all(fontLocations.map(async url => {
 
 function cssReplaceFontSettings(css) {
     return css.replace(/@font-face \{/g, '@font-face {font-display: swap;')
-            //.replace(/font-family: '(.*?)';.*?src:/gs, '$& local("$1"),');
+            ;//.replace(/font-family: '(.*?)';.*?src:/gs, '$& local("$1"),');
 }
 
 const pageTemplate = await afs.readFile(`${minifyDir}/_layouts/page.html`, 'utf8');
@@ -241,6 +241,7 @@ async function minifyJSFile(filePath) {
             strToMinify = convertToES6(strToMinify)
                 // Handle module imports
                 .replace(/^module ([^\s]+) from "/gm, 'import $1 from "')
+                .replace(/^import ([^\s]+) from "(\w+)";/gm, (str, varName, moduleName) => `import ${varName} from "${pathConfig.modulePaths[moduleName] || moduleName}";`)
                 // Handle JSON imports
                 .replace(/import (\w+) from ("|')(\.?)(\.?)((?:\\\2|["'](?<!\2)|[^"'])*\.[Jj][Ss][Oo][Nn])\2;?/g, (str, varName, quoteType, leadingDot01, leadingDot02, jsonPath) =>
                 jsonPath.match(/\bincluded_node_modules\//) ? `const ${varName} = await fetch(${quoteType}${                                                                                jsonPath.replace(/^.*(?=included_node_moduled)/, '/')     }${quoteType}).then(r => r.json())` :

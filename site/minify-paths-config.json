@@ -1,11 +1,10 @@
 {
     "notModule": [],
-    "moduleTypes": {
-        "dist/jszip.js": "COMPATIBLE"
+    "moduleTypes": {},
+    "modulePaths": {
     },
     "excluded": [
         ".config.js",
-        "zip.js/dist/",
         "test/",
         "test.js"
     ]

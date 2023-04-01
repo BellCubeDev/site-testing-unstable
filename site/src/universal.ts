@@ -1443,7 +1443,13 @@ export enum menuCorners {
     bottomRight = 'mdl-menu--top-right'
 }
 
-type optionObj = Record<string, Function|null>
+interface DropdownItem {
+    /** Callback sent when this particular option is selected */
+    onSelect: Function|null;
+    /** Tooltip text to display when hovering over this option */
+    tooltip?: string;
+}
+type optionObj = Record<string, DropdownItem | Function|null>
 
 export abstract class BCDDropdown extends mdl.MaterialMenu {
 
@@ -1542,7 +1548,7 @@ export abstract class BCDDropdown extends mdl.MaterialMenu {
         }
     }
 
-    createOption(option: string, clickCallback?: Function|null, addToList: boolean = false): HTMLLIElement {
+    createOption(option: string, onSelectCallback?: Function|null, tooltip?: string, addToList: boolean = false): HTMLLIElement {
         const li = document.createElement('li');
         li.textContent = option;
         li.setAttribute('option-value', option);
@@ -1550,18 +1556,34 @@ export abstract class BCDDropdown extends mdl.MaterialMenu {
 
         this.registerItem(li);
 
-        const temp_clickCallback = clickCallback ?? this.options_[option] ?? null;
+        const optionData = this.options_[option];
+        if (optionData) {
+
+            if (tooltip === undefined && 'tooltip' in optionData)
+                    tooltip = optionData.tooltip;
+
+            if (!onSelectCallback)
+                if ('onSelect' in optionData) onSelectCallback = optionData.onSelect;
+                else onSelectCallback = optionData;
+        }
 
         if (addToList) {
             this.element_.appendChild(li);
             this.options_keys.push(option);
-            this.options_[option] = temp_clickCallback;
+            this.options_[option] = {
+                onSelect: onSelectCallback ?? null,
+                tooltip,
+            };
         }
 
-        if (temp_clickCallback) registerForEvents(li, {activate: temp_clickCallback.bind(this)});
+        if (onSelectCallback) registerForEvents(li, {activate: onSelectCallback.bind(this)});
 
         this.onCreateOption?.(option);
         return li;
+    }
+
+    createTooltip(targetElement: HTMLLIElement, tooltip: string) {
+
     }
 
     override onItemSelected(option: HTMLLIElement) {
