@@ -1,0 +1,2 @@
+function Pi(){return{name:"Plain text",aliases:["text","txt"],disableAutodetect:!0}}export{Pi as default};
+//# sourceMappingURL=https://raw.githubusercontent.com/BellCubeDev/site-testing-unstable/deployment/assets/site/highlight_js/languages/plaintext.js.map
